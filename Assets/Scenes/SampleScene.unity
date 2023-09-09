@@ -943,7 +943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialHorizontalMovementSpeed: 0.7
-  xThreshold: 1
+  xThreshold: 5
   verticalDropDistance: 0.25
   rows: 4
   columns: 7

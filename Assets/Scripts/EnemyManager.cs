@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [Header("Movement Fields")]
+    [SerializeField] private Vector2 initialPosition;
     [SerializeField] private float initialHorizontalMovementSpeed = 1f;
     [SerializeField] private float xThreshold = 5f;
     [SerializeField] private float verticalDropDistance = 0.5f;
@@ -50,6 +51,7 @@ public class EnemyManager : MonoBehaviour
         }
         else
         {
+            transform.position = initialPosition;
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
@@ -57,18 +59,31 @@ public class EnemyManager : MonoBehaviour
                     enemyMatrix[i, j].SetActive(true);
                 }
             }
+            leftmostCol = 0;
+            rightmostCol = columns - 1;
+            FindLeftmostTransform();
+            FindRightmostTransform();
+
+            movementSpeed = initialHorizontalMovementSpeed;
         }
     }
 
     private void Update()
     {
-        if(!rightmostTransform.gameObject.activeInHierarchy)
+        if(EnemyBase.EnemyCount > 0)
         {
-            FindRightmostTransform();
+            if (!rightmostTransform.gameObject.activeInHierarchy)
+            {
+                FindRightmostTransform();
+            }
+            if (!leftmostTransform.gameObject.activeInHierarchy)
+            {
+                FindLeftmostTransform();
+            }
         }
-        if(!leftmostTransform.gameObject.activeInHierarchy)
+        else
         {
-            FindLeftmostTransform();
+            Reset();
         }
 
         float xCheckPosition = (movementSpeed > 0 ? rightmostTransform.position.x : leftmostTransform.position.x);
@@ -91,7 +106,7 @@ public class EnemyManager : MonoBehaviour
         for(int j = rightmostCol; j >= leftmostCol; j--)
         {
             rightmostCol = j;
-            for(int i = 0; i < rows; i++)
+            for (int i = rows - 1; i >= 0; i--)
             {
                 if(enemyMatrix[i,j].activeInHierarchy)
                 {
@@ -106,7 +121,7 @@ public class EnemyManager : MonoBehaviour
         for(int j = leftmostCol; j <= rightmostCol; j++)
         {
             leftmostCol = j;
-            for(int i = rows-1; i >= 0; i++)
+            for(int i = rows-1; i >= 0; i--)
             {
                 if(enemyMatrix[i,j].activeInHierarchy)
                 {
