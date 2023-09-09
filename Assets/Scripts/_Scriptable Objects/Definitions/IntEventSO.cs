@@ -5,23 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Object/Events/Int Event")]
 public class IntEventSO : ScriptableObject
 {
-    private List<IntEventListener> intEventListenerList;
+    public delegate void IntEvent(int value);
+    public event IntEvent OnEventRaised;
 
-    public void RegisterListener(IntEventListener listener)
+    public void RaiseEvent(int value)
     {
-        intEventListenerList.Add(listener);
-    }
-
-    public void UnregisterListener(IntEventListener listener)
-    {
-        intEventListenerList.Remove(listener);
-    }
-
-    public void Invoke(int value)
-    {
-        foreach(IntEventListener listener in intEventListenerList)
-        {
-            listener.Invoke(value);
-        }
+        OnEventRaised?.Invoke(value);
     }
 }

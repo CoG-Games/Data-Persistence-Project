@@ -8,6 +8,8 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
     public static int EnemyCount { get; protected set; }
     [Header("Enemy Stats Fields")]
     [SerializeField] protected int enemyMaxHealth;
+    [SerializeField] protected int scoreValue;
+    [SerializeField] protected IntEventSO scoreChange;
 
     protected int enemyHealth;
 
@@ -35,6 +37,7 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
     protected virtual void DestroyEnemy()
     {
         EnemyCount--;
+        scoreChange.RaiseEvent(scoreValue);
         gameObject.SetActive(false);
     }
 }

@@ -147,6 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMaxHealth: 2
+  scoreValue: 15
+  scoreChange: {fileID: 11400000, guid: 07f6ed59732786245bf9b4b5664f8f13, type: 2}
   bulletPrefab: {fileID: 8954062111820878370, guid: a37e2e3c225447a4eab78dd6afea4ab4,
     type: 3}
   bulletSpeed: 5
