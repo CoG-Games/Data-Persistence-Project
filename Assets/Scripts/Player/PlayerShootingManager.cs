@@ -11,6 +11,7 @@ public class PlayerShootingManager : MonoBehaviour
     [SerializeField] private FloatVariableSO playerLevel;
 
     private const string ENEMY_TAG = "Enemy";
+    private int bulletDamage = 1;
     private float timeToNextShot;
     void Start()
     {
@@ -37,7 +38,7 @@ public class PlayerShootingManager : MonoBehaviour
             float currentRotation = angleBetweenBullets * i - (playerLevel.value-1) * angleBetweenBullets/2;
             bulletGO.transform.Rotate(Vector3.forward, currentRotation);
             Bullet bullet = bulletGO.GetComponent<Bullet>();
-            bullet.Init(ENEMY_TAG, bulletSpeed);
+            bullet.Init(ENEMY_TAG, bulletSpeed, bulletDamage);
         }
     }
 }

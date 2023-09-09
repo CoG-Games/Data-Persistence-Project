@@ -2,26 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyBase : MonoBehaviour
+[RequireComponent(typeof(CircleCollider2D))]
+public abstract class EnemyBase : MonoBehaviour, IHittable
 {
-    [Header("Shooting Fields")]
-    [SerializeField] protected GameObject bulletPrefab;
+    public static int EnemyCount { get; protected set; }
+    [Header("Enemy Stats Fields")]
+    [SerializeField] protected int enemyMaxHealth;
 
-    protected Vector2 positionOffset;
     protected int enemyHealth;
 
-
-
-    public void SetOffset()
+    protected void Start()
     {
-        positionOffset = transform.localPosition;
+        enemyHealth = enemyMaxHealth;
     }
 
-    protected virtual void Shoot()
+    protected virtual void OnEnable()
     {
-        float yBulletOffset = 0.1f;
-        Instantiate(bulletPrefab, transform.position + yBulletOffset * Vector3.down, bulletPrefab.transform.rotation);
+        EnemyCount++;
     }
+
+    protected abstract void Attack();
 
     public virtual void Hit(int damageAmount)
     {
@@ -34,6 +34,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void DestroyEnemy()
     {
-        Destroy(gameObject);
+        EnemyCount--;
+        gameObject.SetActive(false);
     }
 }
