@@ -42,7 +42,7 @@ public class WaveEnemyListSO : ScriptableObject
                 selectedIndex -= spawnableEnemyList[i].spawnLikelihood;
             }
         }
-        int last = spawnableEnemyList.Count - 1
+        int last = spawnableEnemyList.Count - 1;
         return spawnableEnemyList[last].enemyPrefab;
     }
 }

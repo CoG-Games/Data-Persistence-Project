@@ -10,7 +10,7 @@ public class DivingEnemy : EnemyBase
     [SerializeField] private float xRange = 5.5f;
     private enum DivingState {None, Intro, Descending, Returning, Finished}
     private DivingState state;
-    private bool canAttack = true;
+    private bool canAttack;
 
     private Transform enemyManagerTransform;
     private Vector3 positionOffset;
@@ -20,8 +20,14 @@ public class DivingEnemy : EnemyBase
     protected override void Start()
     {
         base.Start();
-        state = DivingState.None;
         enemyManagerTransform = transform.parent;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        canAttack = true;
+        state = DivingState.None;
         positionOffset = transform.localPosition;
         rotationIdentity = transform.rotation;
     }
@@ -80,15 +86,22 @@ public class DivingEnemy : EnemyBase
                     }
                     break;
                 case DivingState.Returning:
-                    if(Vector3.Distance(transform.position, enemyManagerTransform.position + positionOffset) >= movementSpeed * Time.deltaTime)
+                    if(Vector3.Distance(transform.position, enemyManagerTransform.position + positionOffset) >= 1f)
                     {
+                        transform.Translate(movementSpeed * Time.deltaTime * (enemyManagerTransform.position + positionOffset - transform.position));
+                    }
+                    else if ((Vector3.Distance(transform.position, enemyManagerTransform.position + positionOffset) >= movementSpeed * Time.deltaTime))
+                    {
+                        if (transform.parent != enemyManagerTransform)
+                        {
+                            transform.SetParent(enemyManagerTransform);
+                        }
                         transform.Translate(movementSpeed * Time.deltaTime * (enemyManagerTransform.position + positionOffset - transform.position));
                     }
                     else
                     {
                         transform.SetParent(enemyManagerTransform);
                         transform.localPosition = positionOffset;
-                        Debug.Log("Parent Set");
                         state = DivingState.Finished;
                     }
                     break;
@@ -97,5 +110,18 @@ public class DivingEnemy : EnemyBase
         }
         canAttack = true;
         currentlyDivingEnemyCount--;
+    }
+
+    protected override void DestroyEnemy()
+    {
+        if(canAttack)
+        {
+            currentlyDivingEnemyCount--;
+        }
+        if (transform.parent != enemyManagerTransform)
+        {
+            transform.SetParent(enemyManagerTransform);
+        }
+        base.DestroyEnemy();
     }
 }
