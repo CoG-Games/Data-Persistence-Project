@@ -9,7 +9,10 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
     [Header("Enemy Stats Fields")]
     [SerializeField] protected int enemyMaxHealth;
     [SerializeField] protected int scoreValue;
-    [SerializeField] protected IntEventSO scoreChange;
+
+    [Header("Game Fields")]
+    [SerializeField] protected FloatVariableSO score;
+    [SerializeField] protected FloatVariableSO wave;
 
     protected int enemyHealth;
 
@@ -37,7 +40,7 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
     protected virtual void DestroyEnemy()
     {
         EnemyCount--;
-        scoreChange.RaiseEvent(scoreValue);
+        score.value += scoreValue * wave.value;
         gameObject.SetActive(false);
     }
 }

@@ -4,27 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private IntEventSO OnScoreChange;
-
-    private int score;
+    [SerializeField] private FloatVariableSO score;
+    [SerializeField] private FloatVariableSO wave;
 
     private void Awake()
     {
-        score = 0;
+        score.value = 0;
+        wave.value = 0;
     }
 
-    private void OnEnable()
-    {
-        OnScoreChange.OnEventRaised += ChangeScore;
-    }
-    private void OnDisable()
-    {
-        OnScoreChange.OnEventRaised -= ChangeScore;
-    }
-
-    private void ChangeScore(int value)
-    {
-        score += value;
-        Debug.Log(score);
-    }
+    
 }

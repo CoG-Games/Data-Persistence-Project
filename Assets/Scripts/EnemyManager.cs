@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float rowSeparation = 2f;
     [SerializeField] private float colSeparation = 2f;
     [SerializeField] private List<GameObject> enemySpawnList;
+    [SerializeField] private FloatVariableSO wave;
 
     private GameObject[,] enemyMatrix;
     private float movementSpeed;
@@ -24,30 +25,25 @@ public class EnemyManager : MonoBehaviour
     private Transform rightmostTransform;
     private Transform leftmostTransform;
 
-    private void Awake()
+    private void Start()
     {
-        enemyMatrix = new GameObject[rows,columns];
-        for (int i = 0; i < rows; i++)
-        {
-            for(int j = 0; j < columns; j++)
-            {
-                GameObject enemyPrefab = enemySpawnList[Random.Range(0, enemySpawnList.Count)];
-                enemyMatrix[i, j] = Instantiate(enemyPrefab, transform.position + (i*rowSeparation - (rows-1)*rowSeparation/2) * Vector3.up + (j * colSeparation - (columns - 1) * colSeparation / 2) * Vector3.right, enemyPrefab.transform.rotation, transform);
-            }
-        }
-        leftmostCol = 0;
-        rightmostCol = columns - 1;
-        FindLeftmostTransform();
-        FindRightmostTransform();
-
-        movementSpeed = initialHorizontalMovementSpeed;
+        Reset();
     }
 
     private void Reset()
     {
-        if(enemyMatrix.Length == 0)
+        wave.value++;
+        if(enemyMatrix == null)
         {
-            Awake();
+            enemyMatrix = new GameObject[rows, columns];
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    GameObject enemyPrefab = enemySpawnList[Random.Range(0, enemySpawnList.Count)];
+                    enemyMatrix[i, j] = Instantiate(enemyPrefab, transform.position + (i * rowSeparation - (rows - 1) * rowSeparation / 2) * Vector3.up + (j * colSeparation - (columns - 1) * colSeparation / 2) * Vector3.right, enemyPrefab.transform.rotation, transform);
+                }
+            }
         }
         else
         {
@@ -59,13 +55,14 @@ public class EnemyManager : MonoBehaviour
                     enemyMatrix[i, j].SetActive(true);
                 }
             }
-            leftmostCol = 0;
-            rightmostCol = columns - 1;
-            FindLeftmostTransform();
-            FindRightmostTransform();
-
-            movementSpeed = initialHorizontalMovementSpeed;
         }
+
+        leftmostCol = 0;
+        rightmostCol = columns - 1;
+        FindLeftmostTransform();
+        FindRightmostTransform();
+
+        movementSpeed = initialHorizontalMovementSpeed;
     }
 
     private void Update()
