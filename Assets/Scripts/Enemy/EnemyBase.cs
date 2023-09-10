@@ -16,7 +16,7 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
 
     protected int enemyHealth;
 
-    protected void Start()
+    protected virtual void Start()
     {
         enemyHealth = enemyMaxHealth;
     }
