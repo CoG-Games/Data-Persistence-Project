@@ -57,7 +57,7 @@ public class EnemyManager : MonoBehaviour
                 TryCheckEnemyPool(enemyNumber);
                 if (enemyPool[enemyNumber].Count == 0)
                 {
-                    enemyMatrix[i, j] = Instantiate(enemyPrefab, GetLocalPositionFromGridIndex(i, j), enemyPrefab.transform.rotation, transform);
+                    enemyMatrix[i, j] = Instantiate(enemyPrefab, transform.position + GetLocalPositionFromGridIndex(i, j), enemyPrefab.transform.rotation, transform);
                 }
                 else
                 {
@@ -88,7 +88,7 @@ public class EnemyManager : MonoBehaviour
 
     private Vector3 GetLocalPositionFromGridIndex(int i, int j)
     {
-        return transform.position + (i * rowSeparation - (rows - 1) * rowSeparation / 2) * Vector3.up + (j * colSeparation - (columns - 1) * colSeparation / 2) * Vector3.right;
+        return (i * rowSeparation - (rows - 1) * rowSeparation / 2) * Vector3.up + (j * colSeparation - (columns - 1) * colSeparation / 2) * Vector3.right;
     }
 
     private void Update()
