@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DivingEnemy : EnemyBase
+public class ShootingDivingEnemy : EnemyBase
 {
     public static int currentlyDivingEnemyCount;
     [Header("Diving Fields")]
     [SerializeField] private float movementSpeed = 6f;
     [SerializeField] private float rotateSpeed = 1f;
     [SerializeField] private float xRange = 5.5f;
-    private enum DivingState {None, Intro, Descending, Returning, Finished}
+    [Header("Shooting Fields")]
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float bulletSpeed = 5f;
+    [SerializeField] private int bulletDamage = 1;
+
+    private const string PLAYER_TAG = "Player";
+    private enum DivingState { None, Intro, Descending, Returning, Finished }
     private DivingState state;
     private bool canAttack;
 
@@ -38,6 +44,10 @@ public class DivingEnemy : EnemyBase
         {
             Attack();
         }
+        if (Random.Range(0, 500) == 0)
+        {
+            Shoot();
+        }
     }
     protected override void Attack()
     {
@@ -46,13 +56,21 @@ public class DivingEnemy : EnemyBase
         StartCoroutine(AttackRoutine());
     }
 
+    private void Shoot()
+    {
+        float yBulletOffset = 0.1f;
+        GameObject bulletGO = Instantiate(bulletPrefab, transform.position + yBulletOffset * Vector3.down, bulletPrefab.transform.rotation);
+        Bullet bullet = bulletGO.GetComponent<Bullet>();
+        bullet.Init(PLAYER_TAG, bulletSpeed, bulletDamage);
+    }
+
     private IEnumerator AttackRoutine()
     {
         Vector3 startingPos = transform.position;
         float yBackUpDistance = 0.2f;
         float currentSpeed = 0;
         Vector3 targetPosition = new Vector3(Random.Range(-xRange, xRange), -7f, 0f);
-        while(state != DivingState.Finished)
+        while (state != DivingState.Finished)
         {
             switch (state)
             {
@@ -61,7 +79,7 @@ public class DivingEnemy : EnemyBase
                     state = DivingState.Intro;
                     break;
                 case DivingState.Intro:
-                    if(transform.position.y - startingPos.y < yBackUpDistance * 0.95f)
+                    if (transform.position.y - startingPos.y < yBackUpDistance * 0.95f)
                     {
                         transform.position = Vector3.Lerp(transform.position, startingPos + yBackUpDistance * Vector3.up, movementSpeed * Time.deltaTime);
                     }
@@ -71,7 +89,7 @@ public class DivingEnemy : EnemyBase
                     }
                     break;
                 case DivingState.Descending:
-                    if(transform.position.y > -6.5f)
+                    if (transform.position.y > -6.5f)
                     {
                         currentSpeed = Mathf.Lerp(currentSpeed, movementSpeed, movementSpeed * Time.deltaTime);
                         transform.Translate(currentSpeed * Time.deltaTime * Vector3.down);
@@ -87,7 +105,7 @@ public class DivingEnemy : EnemyBase
                     }
                     break;
                 case DivingState.Returning:
-                    if(Vector3.Distance(transform.position, enemyManagerTransform.position + positionOffset) >= 1f)
+                    if (Vector3.Distance(transform.position, enemyManagerTransform.position + positionOffset) >= 1f)
                     {
                         transform.Translate(movementSpeed * Time.deltaTime * (enemyManagerTransform.position + positionOffset - transform.position));
                     }
@@ -115,7 +133,7 @@ public class DivingEnemy : EnemyBase
 
     protected override void DestroyEnemy()
     {
-        if(canAttack)
+        if (canAttack)
         {
             currentlyDivingEnemyCount--;
         }

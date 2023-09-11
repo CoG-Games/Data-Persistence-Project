@@ -7,15 +7,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bebeeedace4b1334bbae32dbe94f32cb, type: 3}
-  m_Name: Wave 2
+  m_Name: Wave 3
   m_EditorClassIdentifier: 
   spawnableEnemyList:
   - enemyPrefab: {fileID: 2567185277056180304, guid: b63395db78a2c9542a1ab8934e9adf5e,
       type: 3}
-    spawnLikelihood: 7
+    spawnLikelihood: 3
   - enemyPrefab: {fileID: 2567185277056180304, guid: aad1e61da6075654c8c01eb0a3bde605,
       type: 3}
-    spawnLikelihood: 1
+    spawnLikelihood: 2
