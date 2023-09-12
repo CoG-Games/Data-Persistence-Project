@@ -15,10 +15,10 @@ MonoBehaviour:
   spawnableEnemyList:
   - enemyPrefab: {fileID: 2567185277056180304, guid: b63395db78a2c9542a1ab8934e9adf5e,
       type: 3}
-    spawnLikelihood: 9
+    spawnLikelihood: 3
   - enemyPrefab: {fileID: 2567185277056180304, guid: aad1e61da6075654c8c01eb0a3bde605,
       type: 3}
-    spawnLikelihood: 6
+    spawnLikelihood: 3
   - enemyPrefab: {fileID: 2567185277056180304, guid: adec158559e276c4f8c2d8b62168941b,
       type: 3}
-    spawnLikelihood: 5
+    spawnLikelihood: 4

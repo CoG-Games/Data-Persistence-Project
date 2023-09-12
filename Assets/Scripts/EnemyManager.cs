@@ -17,6 +17,13 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float colSeparation = 2f;
     [SerializeField] private List<WaveEnemyListSO> waveList;
     [SerializeField] private FloatVariableSO wave;
+    [SerializeField] private FloatVariableSO isWaveActive;
+    [SerializeField] private FloatVariableSO waveCount;
+
+    [Header("Event Fields")]
+    [SerializeField] private VoidEventSO waveCompleted;
+    [SerializeField] private VoidEventSO preWaveStart;
+    [SerializeField] private VoidEventSO waveStart;
 
     private GameObject[,] enemyMatrix;
     private Dictionary<int, List<GameObject>> enemyPool;
@@ -28,13 +35,25 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
+        waveCount.value = waveList.Count;
+        isWaveActive.value = 0;
         enemyPool = new Dictionary<int, List<GameObject>>();
-        Reset();
+    }
+
+    private void OnEnable()
+    {
+        preWaveStart.OnEventRaised += Reset;
+        waveStart.OnEventRaised += StartWave;
+    }
+
+    private void OnDisable()
+    {
+        preWaveStart.OnEventRaised -= Reset;
+        waveStart.OnEventRaised -= StartWave;
     }
 
     private void Reset()
     {
-        wave.value++;
         if (enemyMatrix == null)
         {
             enemyMatrix = new GameObject[rows, columns];
@@ -64,6 +83,7 @@ public class EnemyManager : MonoBehaviour
                     enemyMatrix[i, j] = enemyPool[enemyNumber][0];
                     enemyPool[enemyNumber].RemoveAt(0);
                     enemyMatrix[i, j].transform.localPosition = GetLocalPositionFromGridIndex(i, j);
+                    enemyMatrix[i, j].transform.rotation = enemyPrefab.transform.rotation;
                     enemyMatrix[i, j].SetActive(true);
                 }
             }
@@ -74,8 +94,12 @@ public class EnemyManager : MonoBehaviour
         rightmostCol = columns - 1;
         FindLeftmostTransform();
         FindRightmostTransform();
+    }
 
+    private void StartWave()
+    {
         movementSpeed = initialHorizontalMovementSpeed;
+        isWaveActive.value = 1;
     }
 
     private void TryCheckEnemyPool(int enemyNumber)
@@ -93,41 +117,39 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        if(EnemyBase.EnemyCount > 0)
-        {
-            if (!rightmostTransform.gameObject.activeInHierarchy)
+        if(isWaveActive.value == 1)
+        { 
+            if(EnemyBase.EnemyCount > 0)
             {
-                FindRightmostTransform();
-            }
-            if (!leftmostTransform.gameObject.activeInHierarchy)
-            {
-                FindLeftmostTransform();
-            }
-        }
-        else
-        {
-            if((int)wave.value < waveList.Count)
-            {
-                Reset();
+                if (!rightmostTransform.gameObject.activeInHierarchy)
+                {
+                    FindRightmostTransform();
+                }
+                if (!leftmostTransform.gameObject.activeInHierarchy)
+                {
+                    FindLeftmostTransform();
+                }
             }
             else
             {
+                isWaveActive.value = 0;
                 movementSpeed = 0;
+                waveCompleted.RaiseEvent();
             }
-        }
 
-        float xCheckPosition = (movementSpeed > 0 ? rightmostTransform.position.x : leftmostTransform.position.x);
-        if (Mathf.Abs(xCheckPosition + movementSpeed * Time.deltaTime) > xThreshold)
-        {
-            Vector3 newPosition = transform.position;
-            newPosition.y -= verticalDropDistance;
-            transform.position = newPosition;
-            float speedUpFactor = -1.05f;
-            movementSpeed *= speedUpFactor;
-        }
-        else
-        {
-            transform.position += movementSpeed * Time.deltaTime * Vector3.right;
+            float xCheckPosition = (movementSpeed > 0 ? rightmostTransform.position.x : leftmostTransform.position.x);
+            if (Mathf.Abs(xCheckPosition + movementSpeed * Time.deltaTime) > xThreshold)
+            {
+                Vector3 newPosition = transform.position;
+                newPosition.y -= verticalDropDistance;
+                transform.position = newPosition;
+                float speedUpFactor = -1.05f;
+                movementSpeed *= speedUpFactor;
+            }
+            else
+            {
+                transform.position += movementSpeed * Time.deltaTime * Vector3.right;
+            }
         }
     }
 

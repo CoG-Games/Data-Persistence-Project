@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ShootingDivingEnemy : EnemyBase
 {
-    public static int currentlyDivingEnemyCount;
     [Header("Diving Fields")]
     [SerializeField] private float movementSpeed = 6f;
     [SerializeField] private float rotateSpeed = 1f;
@@ -13,6 +12,7 @@ public class ShootingDivingEnemy : EnemyBase
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed = 5f;
     [SerializeField] private int bulletDamage = 1;
+    [SerializeField] private float shootingCooldownTime;
 
     private const string PLAYER_TAG = "Player";
     private enum DivingState { None, Intro, Descending, Returning, Finished }
@@ -22,6 +22,7 @@ public class ShootingDivingEnemy : EnemyBase
     private Transform enemyManagerTransform;
     private Vector3 positionOffset;
     private Quaternion rotationIdentity;
+    private bool canShoot = true;
 
 
     protected override void Start()
@@ -40,20 +41,26 @@ public class ShootingDivingEnemy : EnemyBase
     }
     private void Update()
     {
-        if (canAttack && Random.Range(0, 500) == 0 && currentlyDivingEnemyCount < 5)
+        if (isWaveActive.value == 0f)
+        {
+            return;
+        }
+        if (canAttack && Random.Range(0, 50 + 26 * EnemyCount) == 0 && DivingEnemy.currentlyDivingEnemyCount < 5)
         {
             Attack();
         }
-        if (Random.Range(0, 500) == 0)
+        if (canShoot && Random.Range(0, 200 + 30 * EnemyCount) == 0)
         {
+            canShoot = false;
             Shoot();
+            StartCoroutine(ResetCooldownRoutine());
         }
     }
     protected override void Attack()
     {
         canAttack = false;
-        currentlyDivingEnemyCount++;
-        StartCoroutine(AttackRoutine());
+        DivingEnemy.currentlyDivingEnemyCount++;
+        StartCoroutine(nameof(AttackRoutine));
     }
 
     private void Shoot()
@@ -62,6 +69,12 @@ public class ShootingDivingEnemy : EnemyBase
         GameObject bulletGO = Instantiate(bulletPrefab, transform.position + yBulletOffset * Vector3.down, bulletPrefab.transform.rotation);
         Bullet bullet = bulletGO.GetComponent<Bullet>();
         bullet.Init(PLAYER_TAG, bulletSpeed, bulletDamage);
+    }
+
+    private IEnumerator ResetCooldownRoutine()
+    {
+        yield return new WaitForSeconds(shootingCooldownTime);
+        canShoot = true;
     }
 
     private IEnumerator AttackRoutine()
@@ -128,14 +141,15 @@ public class ShootingDivingEnemy : EnemyBase
             yield return null;
         }
         canAttack = true;
-        currentlyDivingEnemyCount--;
+        DivingEnemy.currentlyDivingEnemyCount--;
     }
 
     protected override void DestroyEnemy()
     {
         if (canAttack)
         {
-            currentlyDivingEnemyCount--;
+            StopCoroutine(nameof(AttackRoutine));
+            DivingEnemy.currentlyDivingEnemyCount--;
         }
         if (transform.parent != enemyManagerTransform)
         {

@@ -16,7 +16,10 @@ public class WaveEnemyListSO : ScriptableObject
     private int totalLikelihoodSum;
     private void Awake()
     {
-        spawnableEnemyList = new List<EnemySpawnStruct>();
+        if(spawnableEnemyList == null)
+        {
+            spawnableEnemyList = new List<EnemySpawnStruct>();
+        }
     }
 
     private void OnEnable()

@@ -8,14 +8,23 @@ public class SimpleEnemy : EnemyBase
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed = 5f;
     [SerializeField] private int bulletDamage = 1;
+    [SerializeField] private float shootingCooldownTime;
 
     private const string PLAYER_TAG = "Player";
+    private bool canShoot = true;
 
     private void Update()
     {
-        if(Random.Range(0,500) == 0)
+        //Debug.Log(base.isWaveActive);
+        if (isWaveActive.value == 0f)
         {
+            return;
+        }
+        if (canShoot && Random.Range(0,200+30* EnemyCount) == 0)
+        {
+            canShoot = false;
             Attack();
+            StartCoroutine(ResetCooldownRoutine());
         }
     }
 
@@ -25,5 +34,11 @@ public class SimpleEnemy : EnemyBase
         GameObject bulletGO = Instantiate(bulletPrefab, transform.position + yBulletOffset * Vector3.down, bulletPrefab.transform.rotation);
         Bullet bullet = bulletGO.GetComponent<Bullet>();
         bullet.Init(PLAYER_TAG, bulletSpeed, bulletDamage);
+    }
+
+    private IEnumerator ResetCooldownRoutine()
+    {
+        yield return new WaitForSeconds(shootingCooldownTime);
+        canShoot = true;
     }
 }

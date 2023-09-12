@@ -32,9 +32,15 @@ public class DivingEnemy : EnemyBase
         positionOffset = transform.localPosition;
         rotationIdentity = transform.rotation;
     }
+
+
     private void Update()
     {
-        if (canAttack && Random.Range(0, 500) == 0 && currentlyDivingEnemyCount < 5)
+        if (isWaveActive.value == 0f)
+        {
+            return;
+        }
+        if (canAttack && Random.Range(0, 500 + 26 * EnemyCount) == 0 && currentlyDivingEnemyCount < 5)
         {
             Attack();
         }
@@ -43,7 +49,7 @@ public class DivingEnemy : EnemyBase
     {
         canAttack = false;
         currentlyDivingEnemyCount++;
-        StartCoroutine(AttackRoutine());
+        StartCoroutine(nameof(AttackRoutine));
     }
 
     private IEnumerator AttackRoutine()
@@ -115,8 +121,9 @@ public class DivingEnemy : EnemyBase
 
     protected override void DestroyEnemy()
     {
-        if(canAttack)
+        if(!canAttack)
         {
+            StopCoroutine(nameof(AttackRoutine));
             currentlyDivingEnemyCount--;
         }
         if (transform.parent != enemyManagerTransform)

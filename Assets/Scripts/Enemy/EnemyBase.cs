@@ -12,7 +12,13 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
 
     [Header("Game Fields")]
     [SerializeField] protected FloatVariableSO score;
-    [SerializeField] protected FloatVariableSO wave;
+    [SerializeField] protected FloatVariableSO scoreMultiplier;
+    [SerializeField] protected FloatVariableSO isWaveActive;
+
+    [Header("Event Fields")]
+    [SerializeField] protected VoidEventSO waveCompleted;
+    [SerializeField] protected VoidEventSO waveStart;
+    [SerializeField] protected Vector3EventSO onDefeatedPosition;
 
     protected int enemyHealth;
 
@@ -40,7 +46,8 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
     protected virtual void DestroyEnemy()
     {
         EnemyCount--;
-        score.value += scoreValue * wave.value;
+        score.value += scoreValue * scoreMultiplier.value;
+        onDefeatedPosition.RaiseEvent(transform.position);
         gameObject.SetActive(false);
     }
 }
