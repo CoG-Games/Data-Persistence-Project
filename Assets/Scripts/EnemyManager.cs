@@ -118,7 +118,7 @@ public class EnemyManager : MonoBehaviour
     private void Update()
     {
         if(isWaveActive.value == 1)
-        { 
+        {
             if(EnemyBase.EnemyCount > 0)
             {
                 if (!rightmostTransform.gameObject.activeInHierarchy)

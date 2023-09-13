@@ -34,8 +34,9 @@ public class DivingEnemy : EnemyBase
     }
 
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (isWaveActive.value == 0f)
         {
             return;

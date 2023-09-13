@@ -39,8 +39,9 @@ public class ShootingDivingEnemy : EnemyBase
         positionOffset = transform.localPosition;
         rotationIdentity = transform.rotation;
     }
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (isWaveActive.value == 0f)
         {
             return;

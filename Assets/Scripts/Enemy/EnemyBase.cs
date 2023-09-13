@@ -24,21 +24,35 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
 
     protected virtual void Start()
     {
-        enemyHealth = enemyMaxHealth;
+        
     }
 
     protected virtual void OnEnable()
     {
         EnemyCount++;
+        enemyHealth = enemyMaxHealth;
+    }
+
+    protected virtual void Update()
+    {
+        if(transform.position.y < -7f)
+        {
+            DestroyEnemy();
+        }
     }
 
     protected abstract void Attack();
 
     public virtual void Hit(int damageAmount)
     {
+        if(enemyHealth <= 0)
+        {
+            return;
+        }
         enemyHealth -= damageAmount;
         if(enemyHealth <= 0)
         {
+            score.value += scoreValue * scoreMultiplier.value;
             DestroyEnemy();
         }
     }
@@ -46,7 +60,6 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
     protected virtual void DestroyEnemy()
     {
         EnemyCount--;
-        score.value += scoreValue * scoreMultiplier.value;
         onDefeatedPosition.RaiseEvent(transform.position);
         gameObject.SetActive(false);
     }

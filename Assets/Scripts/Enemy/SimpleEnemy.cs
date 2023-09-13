@@ -13,9 +13,9 @@ public class SimpleEnemy : EnemyBase
     private const string PLAYER_TAG = "Player";
     private bool canShoot = true;
 
-    private void Update()
+    protected override void Update()
     {
-        //Debug.Log(base.isWaveActive);
+        base.Update();
         if (isWaveActive.value == 0f)
         {
             return;

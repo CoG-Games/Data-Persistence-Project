@@ -43,12 +43,18 @@ public class GameManager : MonoBehaviour
 
     private void StartPreWave()
     {
-        preWaveStart.RaiseEvent();
+        if (wave.value <= waveCount.value)
+        {
+            preWaveStart.RaiseEvent();
+        }
     }
 
     private void CompleteIntro()
     {
-        waveStart.RaiseEvent();
+        if (wave.value <= waveCount.value)
+        {
+            waveStart.RaiseEvent();
+        }
     }
 
     private void CompleteWave()
