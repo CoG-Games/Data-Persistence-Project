@@ -54,17 +54,26 @@ public class EnemyManager : MonoBehaviour
 
     private void Reset()
     {
+        if(wave.value > waveList.Count)
+        {
+            return;
+        }
         if (enemyMatrix == null)
         {
             enemyMatrix = new GameObject[rows, columns];
         }
+        StartCoroutine(ResetRoutine());
+    }
+
+    private IEnumerator ResetRoutine()
+    {
         int waveIndex = (int)wave.value - 1;
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
                 int enemyNumber;
-                if(enemyMatrix[i, j] != null)
+                if (enemyMatrix[i, j] != null)
                 {
                     enemyNumber = int.Parse(enemyMatrix[i, j].name.Substring(0, 2));
                     TryCheckEnemyPool(enemyNumber);
@@ -86,6 +95,7 @@ public class EnemyManager : MonoBehaviour
                     enemyMatrix[i, j].transform.rotation = enemyPrefab.transform.rotation;
                     enemyMatrix[i, j].SetActive(true);
                 }
+                yield return null;
             }
         }
 
@@ -98,8 +108,12 @@ public class EnemyManager : MonoBehaviour
 
     private void StartWave()
     {
-        movementSpeed = initialHorizontalMovementSpeed;
+        if (wave.value > waveList.Count)
+        {
+            return;
+        }
         isWaveActive.value = 1;
+        movementSpeed = initialHorizontalMovementSpeed;
     }
 
     private void TryCheckEnemyPool(int enemyNumber)

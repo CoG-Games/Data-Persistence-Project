@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
+
 public abstract class EnemyBase : MonoBehaviour, IHittable
 {
     public static int EnemyCount { get; protected set; }
@@ -22,9 +22,9 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
 
     protected int enemyHealth;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
-        
+        enemyHealth = enemyMaxHealth;
     }
 
     protected virtual void OnEnable()
@@ -35,7 +35,7 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
 
     protected virtual void Update()
     {
-        if(transform.position.y < -7f)
+        if(transform.position.y < -8f)
         {
             DestroyEnemy();
         }

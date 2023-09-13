@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private VoidEventSO waveCompleted;
     [SerializeField] private VoidEventSO preWaveStart;
     [SerializeField] private VoidEventSO waveStart;
+    [SerializeField] private VoidEventSO bossDefeated;
 
     private bool isWaveActive;
 
@@ -33,6 +35,12 @@ public class GameManager : MonoBehaviour
         introHalf.OnEventRaised += StartPreWave;
         introComplete.OnEventRaised += CompleteIntro;
         waveCompleted.OnEventRaised += CompleteWave;
+        bossDefeated.OnEventRaised += WinLevel;
+    }
+
+    private void WinLevel()
+    {
+        Debug.Log("YOU WIN!!!");
     }
 
     private void OnDisable()
@@ -43,7 +51,7 @@ public class GameManager : MonoBehaviour
 
     private void StartPreWave()
     {
-        if (wave.value <= waveCount.value)
+        if (wave.value <= waveCount.value +1)
         {
             preWaveStart.RaiseEvent();
         }
@@ -51,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     private void CompleteIntro()
     {
-        if (wave.value <= waveCount.value)
+        if (wave.value <= waveCount.value +1)
         {
             waveStart.RaiseEvent();
         }

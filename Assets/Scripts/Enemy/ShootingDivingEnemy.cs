@@ -25,9 +25,8 @@ public class ShootingDivingEnemy : EnemyBase
     private bool canShoot = true;
 
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         enemyManagerTransform = transform.parent;
     }
 

@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         transform.Translate(bulletSpeed * Vector3.up * Time.deltaTime);
-        if(Mathf.Abs(transform.position.y) > 7f)
+        if(Mathf.Abs(transform.position.y) > 7f || Mathf.Abs(transform.position.x) > 7f)
         {
             Destroy(gameObject);
         }

@@ -14,7 +14,6 @@ public class WaveIntroContainer : MonoBehaviour
     private void Awake()
     {
         HideIntro();
-        HideBossIntro();
     }
 
     private void OnEnable()
@@ -36,11 +35,6 @@ public class WaveIntroContainer : MonoBehaviour
         bossIntro.SetActive(true);
     }
 
-    private void HideBossIntro()
-    {
-        bossIntro.SetActive(false);
-    }
-
     private void ShowIntro()
     {
         waveIntro.SetActive(true);
@@ -49,5 +43,6 @@ public class WaveIntroContainer : MonoBehaviour
     private void HideIntro()
     {
         waveIntro.SetActive(false);
+        bossIntro.SetActive(false);
     }
 }

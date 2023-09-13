@@ -18,9 +18,8 @@ public class DivingEnemy : EnemyBase
     private Quaternion rotationIdentity;
 
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         enemyManagerTransform = transform.parent;
     }
 
