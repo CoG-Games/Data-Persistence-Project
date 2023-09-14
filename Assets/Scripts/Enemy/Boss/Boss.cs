@@ -7,6 +7,7 @@ public class Boss : MonoBehaviour
     [SerializeField] private float extraTimeBetweenAttacks = 0.5f;
     [SerializeField] private Vector3EventSO onEnemyDefeated;
     [SerializeField] private FloatVariableSO bossHealth;
+    [SerializeField] private FloatVariableSO bossHealthMax;
     [SerializeField] private VoidEventSO bossDefeated;
     [SerializeField] private VoidEventSO waveStarted;
 
@@ -29,9 +30,10 @@ public class Boss : MonoBehaviour
             {
                 bossComponentList.Add(bossComponent);
                 activeBossComponents++;
-                bossHealth.value = Mathf.Max(bossComponent.GetHealth(), bossHealth.value);
+                bossHealthMax.value = Mathf.Max(bossComponent.GetHealth(), bossHealth.value);
             }
         }
+        bossHealth.value = bossHealthMax.value;
     }
 
     private void OnEnable()

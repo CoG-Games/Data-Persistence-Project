@@ -6,23 +6,42 @@ using TMPro;
 public class WaveDisplay : MonoBehaviour
 {
     [SerializeField] private FloatVariableSO wave;
+    [SerializeField] private VoidEventSO introBossStart;
 
     private TextMeshProUGUI waveText;
     private int currentWave;
-    private string[] WaveDisplayArray = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "BOSS" };
+    private bool isBossActive;
+    private string[] waveDisplayArray = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV" };
 
     private void Start()
     {
-        waveText = GetComponent<TextMeshProUGUI>();
         currentWave = 0;
+        isBossActive = false;
+        waveText = GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
     {
-        if(currentWave != (int) wave.value)
+        if(currentWave != (int)wave.value && !isBossActive)
         {
             currentWave = (int)wave.value;
-            waveText.text = WaveDisplayArray[currentWave];
+            waveText.text = waveDisplayArray[currentWave];
         }
+    }
+
+    private void OnEnable()
+    {
+        introBossStart.OnEventRaised += UpdateDisplayBoss;
+    }
+
+    private void OnDisable()
+    {
+        introBossStart.OnEventRaised -= UpdateDisplayBoss;
+    }
+
+    private void UpdateDisplayBoss()
+    {
+        isBossActive = true;
+        waveText.text = "BOSS";
     }
 }

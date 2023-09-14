@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMaxHealth: 200
-  scoreValue: 11
+  scoreValue: 4321
   score: {fileID: 11400000, guid: faa9f809507324d4baa42886feba5828, type: 2}
   scoreMultiplier: {fileID: 11400000, guid: 9faf604e7a70d074abed0b80b4302d3b, type: 2}
   isWaveActive: {fileID: 11400000, guid: 0aee6791177b98c4b87e235175a3a869, type: 2}
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMaxHealth: 60
-  scoreValue: 11
+  scoreValue: 4321
   score: {fileID: 11400000, guid: faa9f809507324d4baa42886feba5828, type: 2}
   scoreMultiplier: {fileID: 11400000, guid: 9faf604e7a70d074abed0b80b4302d3b, type: 2}
   isWaveActive: {fileID: 11400000, guid: 0aee6791177b98c4b87e235175a3a869, type: 2}
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMaxHealth: 60
-  scoreValue: 11
+  scoreValue: 4321
   score: {fileID: 11400000, guid: faa9f809507324d4baa42886feba5828, type: 2}
   scoreMultiplier: {fileID: 11400000, guid: 9faf604e7a70d074abed0b80b4302d3b, type: 2}
   isWaveActive: {fileID: 11400000, guid: 0aee6791177b98c4b87e235175a3a869, type: 2}
@@ -512,5 +512,6 @@ MonoBehaviour:
   extraTimeBetweenAttacks: 0.5
   onEnemyDefeated: {fileID: 11400000, guid: 27c060204aebe0648b22447c2ceb3eda, type: 2}
   bossHealth: {fileID: 11400000, guid: 48d26a4baff78de479e0703b0797120d, type: 2}
+  bossHealthMax: {fileID: 11400000, guid: 3d1fa381da7743746bab3eb24a5c8b90, type: 2}
   bossDefeated: {fileID: 11400000, guid: 1d2d6d5738549da4899c87f418ceaa55, type: 2}
   waveStarted: {fileID: 11400000, guid: db64e967ab1dd3447b7c02e36ac0785f, type: 2}
