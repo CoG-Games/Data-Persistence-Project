@@ -1803,7 +1803,13 @@ MonoBehaviour:
   columns: 7
   rowSeparation: 1
   colSeparation: 1.5
-  waveList: []
+  waveList:
+  - {fileID: 11400000, guid: a6b284098a192ef46b3071971fcd201e, type: 2}
+  - {fileID: 11400000, guid: 0dd89037e81f33e4f8a222807351925d, type: 2}
+  - {fileID: 11400000, guid: 37a0cd9a8df9d8f45aa38f5ba0e6d658, type: 2}
+  - {fileID: 11400000, guid: bdf61a5c2afb561438dbb04dfecef6f3, type: 2}
+  - {fileID: 11400000, guid: 5100552488dc2ab4da1536ce06b45445, type: 2}
+  - {fileID: 11400000, guid: d0c0bdd6ba1ec3f48ab748a82761504e, type: 2}
   wave: {fileID: 11400000, guid: aadae2cce777f3c4895fba62c8d8139e, type: 2}
   isWaveActive: {fileID: 11400000, guid: 0aee6791177b98c4b87e235175a3a869, type: 2}
   waveCount: {fileID: 11400000, guid: d12b3dac78903a84990abc058ed3ad5f, type: 2}

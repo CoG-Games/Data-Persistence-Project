@@ -35,7 +35,7 @@ public abstract class EnemyBase : MonoBehaviour, IHittable
 
     protected virtual void Update()
     {
-        if(transform.position.y < -8f)
+        if(transform.position.y < -7f)
         {
             DestroyEnemy();
         }

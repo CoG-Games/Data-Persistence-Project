@@ -62,6 +62,7 @@ public class EnemyManager : MonoBehaviour
         {
             enemyMatrix = new GameObject[rows, columns];
         }
+        transform.position = initialPosition;
         StartCoroutine(ResetRoutine());
     }
 
@@ -99,7 +100,6 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
-        transform.position = initialPosition;
         leftmostCol = 0;
         rightmostCol = columns - 1;
         FindLeftmostTransform();

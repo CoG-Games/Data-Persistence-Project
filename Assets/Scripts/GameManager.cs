@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FloatVariableSO wave;
     [SerializeField] private FloatVariableSO scoreMultiplier;
     [SerializeField] private FloatVariableSO waveCount;
+    [SerializeField] private FloatVariableSO playerLevel;
 
     [Header("Event Fields")]
     [SerializeField] private VoidEventSO introStart;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        playerLevel.value = 1;
         score.value = 0;
         wave.value = 0;
         scoreMultiplier.value = 1;

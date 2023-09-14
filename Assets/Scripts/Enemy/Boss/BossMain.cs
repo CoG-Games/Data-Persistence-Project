@@ -23,9 +23,11 @@ public class BossMain : EnemyBase, IBossable
     private SpriteRenderer sprite;
     private Color mainColor;
     private int hitCount;
+    private bool isDefeated;
 
     private void Start()
     {
+        isDefeated = false;
         hitCount = 0;
         sprite = GetComponent<SpriteRenderer>();
         mainColor = sprite.color;
@@ -78,6 +80,10 @@ public class BossMain : EnemyBase, IBossable
 
     protected override void Attack()
     {
+        if (isDefeated)
+        {
+            return;
+        }
         StartCoroutine(AttackRoutine());
     }
 
@@ -122,6 +128,7 @@ public class BossMain : EnemyBase, IBossable
     }
     protected override void DestroyEnemy()
     {
+        isDefeated = true;
         EnemyCount--;
         onDefeatedPosition.RaiseEvent(transform.position);
         sprite.color = defeatedColor;
