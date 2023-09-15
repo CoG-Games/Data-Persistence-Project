@@ -32,7 +32,7 @@ public class PowerupManager : MonoBehaviour
     {
         if (!canSpawnPowerup || playerPowerupLevel.value == playerMaxLevel)
             return;
-        if (Random.Range(0,5 + 5*(int)playerPowerupLevel.value) == 0)
+        if (Random.Range(0,10 + 10*(int)playerPowerupLevel.value) == 0)
         {
             Instantiate(powerupPrefab, position, powerupPrefab.transform.rotation, transform);
             canSpawnPowerup = false;

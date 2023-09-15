@@ -8,21 +8,15 @@ public class ScoreDisplay : MonoBehaviour
     [SerializeField] private FloatVariableSO score;
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    private float oldScore;
-
-    private void Update()
+    private void Awake()
     {
-        if(score.value != oldScore)
+        string oldText = Mathf.Min(score.value, 9999999).ToString();
+        string newText = "";
+        while (oldText.Length + newText.Length < 7)
         {
-            oldScore = score.value;
-            string oldText = Mathf.Min(score.value, 9999999).ToString();
-            string newText = "";
-            while (oldText.Length + newText.Length < 7)
-            {
-                newText += "0";
-            }
-            newText += oldText;
-            scoreText.text = newText;
+            newText += "0";
         }
+        newText += oldText;
+        scoreText.text = newText;
     }
 }

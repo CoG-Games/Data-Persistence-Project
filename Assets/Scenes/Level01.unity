@@ -1339,7 +1339,7 @@ MonoBehaviour:
   waveCompleted: {fileID: 11400000, guid: c24e662d37685204aa0d6718da0314f8, type: 2}
   preWaveStart: {fileID: 11400000, guid: 28f12135e5c97f7428e16ff75a18e4f1, type: 2}
   waveStart: {fileID: 11400000, guid: db64e967ab1dd3447b7c02e36ac0785f, type: 2}
-  bossDefeated: {fileID: 11400000, guid: 1d2d6d5738549da4899c87f418ceaa55, type: 2}
+  levelVictory: {fileID: 0}
 --- !u!4 &787775013
 Transform:
   m_ObjectHideFlags: 0
@@ -1893,7 +1893,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6701f2d8f39124b4a9b251126143ced8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2334,6 +2334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29887af1497d5f54bbd0e1ea1eb84a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossDefeated: {fileID: 11400000, guid: 1d2d6d5738549da4899c87f418ceaa55, type: 2}
 --- !u!1 &1409856330
 GameObject:
   m_ObjectHideFlags: 0
@@ -2488,7 +2489,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1412333538
 RectTransform:
@@ -2865,10 +2866,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInput: {fileID: 1310047718}
-  movementSpeed: 7
+  defaultMovementSpeed: 7
   xRange: 5.25
   yRange: 2
   yOffset: -3
+  bossDefeated: {fileID: 11400000, guid: 1d2d6d5738549da4899c87f418ceaa55, type: 2}
+  levelVictory: {fileID: 11400000, guid: b0c960611c86a314480ab87828867a9a, type: 2}
 --- !u!114 &1762834954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2890,6 +2893,7 @@ MonoBehaviour:
   scoreMultiplier: {fileID: 11400000, guid: 9faf604e7a70d074abed0b80b4302d3b, type: 2}
   waveCompleted: {fileID: 11400000, guid: c24e662d37685204aa0d6718da0314f8, type: 2}
   waveStart: {fileID: 11400000, guid: db64e967ab1dd3447b7c02e36ac0785f, type: 2}
+  bossDefeated: {fileID: 11400000, guid: 1d2d6d5738549da4899c87f418ceaa55, type: 2}
 --- !u!58 &1762834955
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -40,7 +40,7 @@ public class DivingEnemy : EnemyBase
         {
             return;
         }
-        if (canAttack && Random.Range(0, 500 + 26 * EnemyCount) == 0 && currentlyDivingEnemyCount < 5)
+        if (canAttack && Random.Range(0, 200 + 16 * EnemyCount) == 0 && currentlyDivingEnemyCount < 5)
         {
             Attack();
         }

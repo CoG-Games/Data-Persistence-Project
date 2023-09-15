@@ -45,11 +45,11 @@ public class ShootingDivingEnemy : EnemyBase
         {
             return;
         }
-        if (canAttack && Random.Range(0, 50 + 26 * EnemyCount) == 0 && DivingEnemy.currentlyDivingEnemyCount < 5)
+        if (canAttack && Random.Range(0, 50 + 16 * EnemyCount) == 0 && DivingEnemy.currentlyDivingEnemyCount < 5)
         {
             Attack();
         }
-        if (canShoot && Random.Range(0, 200 + 30 * EnemyCount) == 0)
+        if (canShoot && Random.Range(0, 100 + 30 * EnemyCount) == 0)
         {
             canShoot = false;
             Shoot();

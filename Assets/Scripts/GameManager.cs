@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private VoidEventSO waveCompleted;
     [SerializeField] private VoidEventSO preWaveStart;
     [SerializeField] private VoidEventSO waveStart;
-    [SerializeField] private VoidEventSO bossDefeated;
+    [SerializeField] private VoidEventSO levelVictory;
+
 
     private bool isWaveActive;
 
@@ -37,18 +39,20 @@ public class GameManager : MonoBehaviour
         introHalf.OnEventRaised += StartPreWave;
         introComplete.OnEventRaised += CompleteIntro;
         waveCompleted.OnEventRaised += CompleteWave;
-        bossDefeated.OnEventRaised += WinLevel;
+        levelVictory.OnEventRaised += WinLevel;
     }
 
     private void WinLevel()
     {
-        Debug.Log("YOU WIN!!!");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name + 1);
     }
 
     private void OnDisable()
     {
         introHalf.OnEventRaised -= StartPreWave;
         introComplete.OnEventRaised -= CompleteIntro;
+        waveCompleted.OnEventRaised -= CompleteWave;
+        levelVictory.OnEventRaised -= WinLevel;
     }
 
     private void StartPreWave()

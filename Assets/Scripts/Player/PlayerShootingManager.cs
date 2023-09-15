@@ -15,6 +15,7 @@ public class PlayerShootingManager : MonoBehaviour, IHittable
     [Header("Event Fields")]
     [SerializeField] private VoidEventSO waveCompleted;
     [SerializeField] private VoidEventSO waveStart;
+    [SerializeField] private VoidEventSO bossDefeated;
 
     private const string ENEMY_TAG = "Enemy";
     private int bulletDamage = 1;
@@ -30,6 +31,14 @@ public class PlayerShootingManager : MonoBehaviour, IHittable
     {
         waveCompleted.OnEventRaised += DeactivateWave;
         waveStart.OnEventRaised += ActivateWave;
+        bossDefeated.OnEventRaised += DeactivateWave;
+    }
+
+    private void OnDisable()
+    {
+        waveCompleted.OnEventRaised -= DeactivateWave;
+        waveStart.OnEventRaised -= ActivateWave;
+        bossDefeated.OnEventRaised -= DeactivateWave;
     }
 
     private void DeactivateWave()
@@ -73,6 +82,14 @@ public class PlayerShootingManager : MonoBehaviour, IHittable
     public void Powerup()
     {
         playerLevel.value++;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag(ENEMY_TAG))
+        {
+            Hit(1);
+        }
     }
 
     public void Hit(int damageValue)
