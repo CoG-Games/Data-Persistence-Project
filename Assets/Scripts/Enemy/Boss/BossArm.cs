@@ -119,6 +119,7 @@ public class BossArm : EnemyBase, IBossable
         isDefeated = true;
         EnemyCount--;
         onDefeatedPosition.RaiseEvent(transform.position);
+        StopAllCoroutines();
         sprite.color = defeatedColor;
         Destroy(this);
     }

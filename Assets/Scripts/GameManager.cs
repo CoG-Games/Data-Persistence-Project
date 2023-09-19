@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FloatVariableSO scoreMultiplier;
     [SerializeField] private FloatVariableSO waveCount;
     [SerializeField] private FloatVariableSO playerLevel;
+
+    [Header("Initials Fields")]
+    [SerializeField] private StringVariableSO initialString;
+    [SerializeField] private TextMeshProUGUI initialText;
 
     [Header("Event Fields")]
     [SerializeField] private VoidEventSO introStart;
@@ -32,6 +37,7 @@ public class GameManager : MonoBehaviour
         wave.value = 0;
         scoreMultiplier.value = 1;
         isWaveActive = false;
+        initialText.text = initialString.text;
     }
 
     private void OnEnable()
@@ -44,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void WinLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnDisable()
